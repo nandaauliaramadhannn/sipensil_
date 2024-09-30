@@ -1,0 +1,249 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-12">
+            <div class="ep-breadcrumbs__content">
+                <h3 class="ep-breadcrumbs__title">Registration</h3>
+                <ul class="ep-breadcrumbs__menu">
+                    <li><a href="{{ url('/') }}">Home</a></li>
+                    <li><i class="fi-bs-angle-right"></i></li>
+                    <li class="active">Registration</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ep-auth auth-login section-gap position-relative">
+    <div class="container ep-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6 col-md-10 col-12">
+                <div class="ep-auth__card">
+                    <div class="ep-auth__card-head">
+                        <h3 class="ep-auth__card-title">Create an Account</h3>
+                        <p class="ep-auth__card-text">Register to get started</p>
+                    </div>
+                    <div class="ep-auth__card-body">
+                        <form action="{{ route('register') }}" method="post" class="ep-auth__card-form" enctype="multipart/form-data">
+                            @csrf
+
+                            <!-- Role Selection -->
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <select id="role" name="role" class="form-control" onchange="toggleFields()" required>
+                                    <option value="" disabled selected>Select Role</option>
+                                    <option value="user">User</option>
+                                    <option value="lembaga">Lembaga</option>
+                                </select>
+                            </div>
+
+                            <!-- Nama Lengkap -->
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    placeholder="Full Name"
+                                    class="form-control"
+                                    required
+                                />
+                            </div>
+
+                            <!-- Nama Operator (hanya untuk lembaga) -->
+                            <div id="nama_operator_field" class="form-group" style="display: none;">
+                                <label for="nama_operator">Nama Operator</label>
+                                <input
+                                    type="text"
+                                    id="nama_operator"
+                                    name="nama_operator"
+                                    placeholder="Nama Operator"
+                                    class="form-control"
+                                />
+                            </div>
+
+                            <!-- NIK -->
+                            <div class="form-group">
+                                <label for="nik">NIK</label>
+                                <input
+                                    type="text"
+                                    id="nik"
+                                    name="nik"
+                                    placeholder="NIK"
+                                    class="form-control"
+                                />
+                            </div>
+
+                            <!-- No WhatsApp -->
+                            <div class="form-group">
+                                <label for="no_wa">No WhatsApp</label>
+                                <input
+                                    type="text"
+                                    id="no_wa"
+                                    name="no_wa"
+                                    placeholder="No WhatsApp"
+                                    class="form-control"
+                                />
+                            </div>
+
+                            <!-- Alamat -->
+                            <div class="form-group">
+                                <label for="alamat">Address</label>
+                                <input
+                                    type="text"
+                                    id="alamat"
+                                    name="alamat"
+                                    placeholder="Address"
+                                    class="form-control"
+                                />
+                            </div>
+
+                            <!-- KTP, Akte, Surat (hanya untuk lembaga) -->
+                            <div id="lembagaFields" style="display: none;">
+                                <div class="form-group">
+                                    <label for="ktp">KTP</label>
+                                    <input
+                                        type="file"
+                                        id="ktp"
+                                        name="ktp"
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="akte">Akte</label>
+                                    <input
+                                        type="file"
+                                        id="akte"
+                                        name="akte"
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="surat">Surat</label>
+                                    <input
+                                        type="file"
+                                        id="surat"
+                                        name="surat"
+                                        class="form-control"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Email Address"
+                                    class="form-control"
+                                    required
+                                />
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <div class="form-group-input">
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        placeholder="Enter Password"
+                                        class="form-control"
+                                        required
+                                    />
+                                    <span
+                                        class="toggle-password"
+                                        onclick="togglePassword('password')"
+                                    >Show</span>
+                                </div>
+                            </div>
+
+                            <!-- Re-type Password -->
+                            <div class="form-group">
+                                <label for="retype-password">Re-type Password</label>
+                                <div class="form-group-input">
+                                    <input
+                                        type="password"
+                                        id="retype-password"
+                                        name="password_confirmation"
+                                        placeholder="Re-enter Password"
+                                        class="form-control"
+                                        required
+                                    />
+                                    <span
+                                        class="toggle-password"
+                                        onclick="togglePassword('retype-password')"
+                                    >Show</span>
+                                </div>
+                            </div>
+
+                            <!-- Terms and Conditions -->
+                            <div class="ep-auth__card-info">
+                                <div class="form-check">
+                                    <input
+                                        type="checkbox"
+                                        id="custom-checkbox"
+                                        class="form-check-input"
+                                        required
+                                    />
+                                    <label
+                                        for="custom-checkbox"
+                                        class="form-check-label"
+                                    >
+                                        I agree to all the
+                                        <a href="#">terms & conditions</a>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="ep-auth__card-form-btn">
+                                <button type="submit" class="ep-btn">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="ep-auth__card-bottom">
+                        <span>Already have an account?</span>
+                        <a href="{{ route('login') }}">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endsection
+
+@push('js')
+<script>
+    function toggleFields() {
+        var role = document.getElementById('role').value;
+        var lembagaFields = document.getElementById('lembagaFields');
+        var namaOperatorField = document.getElementById('nama_operator_field');
+
+        if (role === 'lembaga') {
+            lembagaFields.style.display = 'block';
+            namaOperatorField.style.display = 'block';
+        } else {
+            lembagaFields.style.display = 'none';
+            namaOperatorField.style.display = 'none';
+        }
+    }
+
+    function togglePassword(id) {
+        var passwordField = document.getElementById(id);
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+        } else {
+            passwordField.type = 'password';
+        }
+    }
+</script>
+@endpush
