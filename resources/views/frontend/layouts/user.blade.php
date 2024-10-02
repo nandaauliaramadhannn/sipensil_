@@ -9,11 +9,11 @@
         <div class="dashboard__bg"><img src="{{asset('frontend')}}/assets/img/bg/dashboard_bg.jpg" alt=""></div>
         <div class="container">
             <div class="dashboard__top-wrap">
-                <div class="dashboard__top-bg" data-background="{{asset('frontend')}}/assets/img/backgorund.jpeg"></div>
+                <div class="dashboard__top-bg" data-background="{{asset('frontend')}}/assets/img/sipensil.png"></div>
                 <div class="dashboard__instructor-info">
                     <div class="dashboard__instructor-info-left">
                         <div class="thumb">
-                            <img src="{{asset('upload/user/'. Auth::user()->data_user->photo)}}" alt="img">
+                            <img src="{{ optional(Auth::user()->data_user)->photo ? asset('upload/user/' . Auth::user()->data_user->photo) : asset('path/to/default/image.png') }}" alt="img">
                         </div>
                         <div class="content">
                             <h4 class="title">{{auth()->user()->nama_lengkap}}</h4>
@@ -48,8 +48,8 @@
                                         Reviews
                                     </a>
                                 </li>
-                                <li class="{{ request()->is('student-history') ? 'active' : '' }}">
-                                    <a href="student-history.html">
+                                <li class="{{ request()->routeIs('page_history.pendaftaran') ? 'active' : '' }}">
+                                    <a href="{{route('page_history.pendaftaran')}}">
                                         <i class="skillgro-satchel"></i>
                                         Pelatihan History
                                     </a>
@@ -61,7 +61,7 @@
                         </div>
                         <nav class="dashboard__sidebar-menu">
                             <ul class="list-wrap">
-                                <li class="{{ request()->is('user.profile') ? 'active' : '' }}">
+                                <li class="{{ request()->routeIs('user.profile') ? 'active' : '' }}">
                                     <a href="{{route('user.profile')}}">
                                         <i class="skillgro-settings"></i>
                                         profile

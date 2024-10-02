@@ -12,9 +12,11 @@ use App\Http\Controllers\Backend\LembagaController;
 use App\Http\Controllers\Backend\RencanaController;
 use App\Http\Controllers\Backend\KategoriController;
 use App\Http\Controllers\Frontend\PesertaController;
+use App\Http\Controllers\Backend\InfoPopupController;
 use App\Http\Controllers\Frontend\DashboardController;
 use App\Http\Controllers\Backend\PendaftaranController;
 use App\Http\Controllers\Frontend\DetialPelatihanController;
+use App\Http\Controllers\Frontend\PelatihanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +33,7 @@ Route::get('/', [HomeController::class, 'page_index'])->name('index');
 Route::get('/detail/pelatihan/{id}', [DetialPelatihanController::class, 'show_page'])->name('detail.page.pelatihan');
 Route::get('/get-data/desa/{kecamatan_id}', [DashboardController::class, 'getDesasByKecamatan'])->name('api.data.desas_by_kecamatan');
 Route::get('pendaftaran/pelatihan/user/daftar/{id}', [PesertaController::class, 'page_pesert'])->name('page_pesert.pendaftaran');
+Route::get('/pelatihan/all', [PelatihanController::class, 'all_page'])->name('all.page.pelatihan');
 
 Auth::routes(['verify' => true]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified')->middleware('checkUserData');
@@ -47,19 +50,22 @@ Route::group(['middleware' => 'verified'], function () {
         Route::put('/slider/toggle-status/{id}', [SliderController::class, 'toggleStatus'])->name('slider.toggleStatus');
         Route::get('/kategori/page_index', [KategoriController::class, 'page_index'])->name('admin.kategori');
         Route::post('/kategori/store', [KategoriController::class, 'store'])->name('admin.kategori.store');
-        Route::get('/rencana_pelatihan',[RencanaController::class, 'page_index'])->name('rencana.page_index');
-        Route::get('/rencana_pelatihan/create',[RencanaController::class, 'create_page'])->name('rencana.page_create');
-        Route::post('rencana_pelatihan/store', [RencanaController::class, 'store_page'])->name('rencana.page_store');
-        Route::get('/rencana_pelatihan/edit/{id}', [RencanaController::class, 'edit_page'])->name('rencana.page_edit');
-        Route::delete('/rencana_pelatihan/delete/{id}', [RencanaController::class, 'destroy_page'])->name('rencana.page_delete');
-        Route::post('/rencana_pelatihan/update/{id}', [RencanaController::class, 'update_page'])->name('rencana.page_update');
+        Route::get('admin/rencana_pelatihan',[RencanaController::class, 'page_index'])->name('admin.rencana.page_index');
+        Route::get('admin/rencana_pelatihan/create',[RencanaController::class, 'create_page'])->name('admin.rencana.page_create');
+        Route::post('admin/rencana_pelatihan/store', [RencanaController::class, 'store_page'])->name('admin.rencana.page_store');
+        Route::get('/admin/rencana_pelatihan/edit/{id}', [RencanaController::class, 'edit_page'])->name('admin.rencana.page_edit');
+        Route::delete('/admin/rencana_pelatihan/delete/{id}', [RencanaController::class, 'destroy_page'])->name('admin.rencana.page_delete');
+        Route::post('/admin/rencana_pelatihan/update/{id}', [RencanaController::class, 'update_page'])->name('admin.rencana.page_update');
 
-        Route::get('pendaftaran/pelatihan', [PendaftaranController::class, 'page_pendaftaran'])->name('pendaftaran.page_pendaftaran');
-        Route::get('pendaftaran/pelatihan/create', [PendaftaranController::class, 'page_create'])->name('pendaftaran.page_create');
-        Route::post('pendafaran/pelatihan/store', [PendaftaranController::class, 'page_store'])->name('pendaftaran.page_store');
+        Route::get('admin/pendaftaran/pelatihan', [PendaftaranController::class, 'page_pendaftaran'])->name('admin.pendaftaran.page_pendaftaran');
+        Route::get('admin/pendaftaran/pelatihan/create', [PendaftaranController::class, 'page_create'])->name('admin.pendaftaran.page_create');
+        Route::post('admin/pendafaran/pelatihan/store', [PendaftaranController::class, 'page_store'])->name('admin.pendaftaran.page_store');
         Route::get('/api/pelatihan/{id}', [PendaftaranController::class, 'getPelatihan']);
-        Route::get('/pendaftaran/pelatihan/edit/{id}', [PendaftaranController::class, 'page_edit'])->name('pendaftaran.page_edit');
-        Route::get('/pendaftaran/pelatihan/show/{id}', [PendaftaranController::class, 'show_page'])->name('pendaftaran.page_show');
+        Route::get('admin/pendaftaran/pelatihan/edit/{id}', [PendaftaranController::class, 'page_edit'])->name('admin.pendaftaran.page_edit');
+        Route::get('admin/pendaftaran/pelatihan/show/{id}', [PendaftaranController::class, 'show_page'])->name('admin.pendaftaran.page_show');
+        Route::get('/admin/popup/page_index', [InfoPopupController::class, 'page_index'])->name('admin.popup.page_index');
+        Route::post('admin/popup/store', [InfoPopupController::class, 'store'])->name('admin.popup.store');
+        Route::delete('/popup/{id}', [InfoPopupController::class, 'destroy'])->name('admin.popup.destroy');
 
 
     });
@@ -110,7 +116,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('user-profile/update', [DashboardController::class, 'update_profile'])->name('user.profile.update');
     Route::get('/pendaftaran/pelatihan/user/daftar/{id}', [PesertaController::class, 'page_pesert'])->name('page_pesert.pendaftaran');
     Route::post('/pendaftaran/pelatihan/user/store/{id}', [PesertaController::class, 'page_store'])->name('page_pesert.store');
-    ROute::get('/bukti-pendaftaran/user/daftar/{id}', [PesertaController::class, 'page_bukti'])->name('page_bukti.pendaftaran');
+    Route::get('/bukti-pendaftaran/user/daftar/{id}', [PesertaController::class, 'page_bukti'])->name('page_bukti.pendaftaran');
+    Route::get('/history/user/daftar/pelatihan', [DashboardController::class, 'history_page'])->name('page_history.pendaftaran');
 
 
 });

@@ -1,5 +1,12 @@
 @php
+    use Illuminate\Support\Facades\Cache;
+    use Illuminate\Support\Facades\Redis;
     $pendaftaran = \App\Models\Pendaftran::paginate(10);
+    $user  = \App\Models\User::where('role', 'user')->count();
+
+    $keys = Redis::keys('laravel_cache:visitor_*');
+
+    $activeVisitors = collect($keys)->count();
 @endphp
 <footer class="footer__area footer__area-five">
     <div class="footer__top footer__top-two">
@@ -36,6 +43,19 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer__bottom footer__bottom-two">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <div class="copy-right-text d-flex justify-content-between">
+                        <p>Jumlah Pengunjung: {{$activeVisitors }}</p>
+                        <p>Jumlah Pelatiahan: {{ $pendaftaran->total() }}</p>
+                        <p>Jumlah Peserta Pelatihan: {{ $user }}</p>
+                    </div>
                 </div>
             </div>
         </div>

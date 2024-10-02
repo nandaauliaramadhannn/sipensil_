@@ -1,7 +1,16 @@
 @extends('backend.layouts.app', ['title' => 'Dashboard'])
 @section('content')
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4">
+@php
+    use Illuminate\Support\Facades\Cache;
+    use Illuminate\Support\Facades\Redis;
+    $pendaftaran = \App\Models\Pendaftran::paginate(10);
+    $user  = \App\Models\User::where('role', 'user')->count();
 
+    $keys = Redis::keys('laravel_cache:visitor_*');
+
+    $activeVisitors = collect($keys)->count();
+@endphp
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4">
     <div class="col">
         <div class="card radius-10">
             <div class="card-body">
@@ -35,8 +44,8 @@
             <div class="card-body">
                 <div class="d-flex align-items-center">
                     <div>
-                        <p class="mb-0 text-secondary">Store Visitors</p>
-                        <h4 class="my-1">59K</h4>
+                        <p class="mb-0 text-secondary">Visitors</p>
+                        <h4 class="my-1">{{$activeVisitors}}</h4>
                     </div>
                     <div class="widgets-icons rounded-circle text-white ms-auto bg-gradient-branding"><i class="bx bxs-binoculars"></i>
                     </div>
@@ -49,8 +58,8 @@
             <div class="card-body">
                 <div class="d-flex align-items-center">
                     <div>
-                        <p class="mb-0 text-secondary">Bounce Rate</p>
-                        <h4 class="my-1">34.46%</h4>
+                        <p class="mb-0 text-secondary">User Terdaftar Pelatihan</p>
+                        <h4 class="my-1">{{$counttotaluser}}</h4>
                     </div>
                     <div class="widgets-icons rounded-circle text-white ms-auto bg-gradient-kyoto"><i class="bx bx-line-chart-down"></i>
                     </div>

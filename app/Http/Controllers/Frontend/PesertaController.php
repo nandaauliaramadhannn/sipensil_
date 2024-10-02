@@ -26,6 +26,11 @@ class PesertaController extends Controller
     {
         $pendaftaran = Pendaftran::findOrFail($id);
 
+            $user = Auth::user();
+            if (empty($user->data_user) || !$user->data_user->isComplete()) {
+                Alert::toast('Silakan lengkapi data Anda sebelum mendaftar', 'error');
+                return redirect()->route('user.profile');
+            }
         $existingRegistration = UserPendaftaran::where('user_id', Auth::user()->id)
             ->where('pendaftaran_id', $pendaftaran->id)
             ->first();

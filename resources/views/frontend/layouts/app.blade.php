@@ -62,7 +62,6 @@
     <script src="{{asset('frontend')}}/assets/js/tg-cursor.min.js"></script>
     <script src="{{asset('frontend')}}/assets/js/vivus.min.js"></script>
     <script src="{{asset('frontend')}}/assets/js/ajax-form.js"></script>
-    <script src="{{asset('frontend')}}/assets/js/svg-inject.min.js"></script>
     <script src="{{asset('frontend')}}/assets/js/jquery.circleType.js"></script>
     <script src="{{asset('frontend')}}/assets/js/jquery.lettering.min.js"></script>
     <script src="{{asset('frontend')}}/assets/js/plyr.min.js"></script>
@@ -70,9 +69,6 @@
     <script src="{{asset('frontend')}}/assets/js/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{asset('frontend')}}/assets/js/main.js"></script>
-    <script>
-        SVGInject(document.querySelectorAll("img.injectable"));
-    </script>
     @stack('js')
 </body>
 </html>

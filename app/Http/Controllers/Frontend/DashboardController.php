@@ -19,20 +19,16 @@ class DashboardController extends Controller
     public function page_dashboard()
     {
         $datapelatihan = UserPendaftaran::where('user_id', Auth::user()->id)->count();
-        $userpendaftaran = UserPendaftaran::where('user_id', Auth::user()->id)
-            ->whereHas('pendaftaran', function($query) {
-                $query->where('periode_awal', '>=', Carbon::now());
-            })
-            ->with('pendaftaran')
-            ->paginate(3);
 
-        foreach ($userpendaftaran as $item) {
-            $periodeAwal = Carbon::parse($item->pendaftaran->periode_awal);
-            $countdown = $periodeAwal->diffInSeconds(Carbon::now());
-
-            $item->countdown = gmdate("H:i:s", $countdown);
-        }
-        return view('frontend.dashboard', compact('datapelatihan','userpendaftaran'));
+        $userPendaftaran = UserPendaftaran::where('user_id', Auth::user()->id)
+        ->whereHas('pendaftaran', function ($query) {
+            $query->where('periode_akhir', '>=', Carbon::now())
+                  ->whereNull('deleted_at');
+        })
+        ->with('pendaftaran')
+        ->orderBy('created_at', 'desc')
+        ->paginate(3);
+        return view('frontend.dashboard', compact('datapelatihan','userPendaftaran'));
     }
 
     public function getDesasByKecamatan($kecamatan_id)
@@ -97,5 +93,19 @@ class DashboardController extends Controller
 
         Alert::toast('Profil berhasil diperbarui!', 'success');
         return redirect()->route('user.profile');
+    }
+
+    public function history_page()
+    {
+        $userId = Auth::user()->id;
+        $historyPelatihan = UserPendaftaran::where('user_id', $userId)
+        ->whereHas('pendaftaran', function ($query) {
+            $query->where('status', 'ditutup');
+        })
+        ->with('pendaftaran')
+        ->paginate(3);
+
+        return view('frontend.peserta.history', compact('historyPelatihan'));
+
     }
 }

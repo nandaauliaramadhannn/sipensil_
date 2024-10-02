@@ -74,7 +74,6 @@
         </div>
     </div>
 </section>
-
 <section class="courses-area-six grey-bg-two">
     <div class="container">
         <div class="row justify-content-center">
@@ -129,7 +128,6 @@
             </div>
             @endforeach
         </div>
-
         <div class="discover-courses-btn text-center mt-30">
             <a href="courses.html" class="btn arrow-btn btn-four">Lihat Semua Pelatihan <img src="{{asset('frontend')}}/assets/img/icons/right_arrow.svg" alt="" class="injectable"></a>
         </div>
@@ -222,8 +220,40 @@
         <img src="{{asset('frontend')}}/assets/img/others/h7_categories_shape04.svg" alt="shape" data-aos="fade-up-right" data-aos-delay="400">
     </div>
 </section>
+<div class="container">
+    @if($popup)
+        <div class="modal fade" id="infoPopupModal" tabindex="-1" aria-labelledby="infoPopupModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="infoPopupModalLabel">{{ $popup->title }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ $popup->message }}</p>
+                        @if($popup->image)
+                            <img src="{{ asset('upload/popup/' . $popup->image) }}" class="img-fluid" alt="Popup Image">
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+</div>
 @endsection
 @push('js')
+<script type="text/javascript">
+    $(document).ready(function() {
+        if (!localStorage.getItem('popupShown')) {
+            var modal = new bootstrap.Modal(document.getElementById('infoPopupModal'));
+            modal.show();
+            localStorage.setItem('popupShown', 'true');
+        }
+    });
+</script>
 <script>
     var swiper = new Swiper('.slider__active', {
         loop: true,

@@ -17,6 +17,24 @@
         </a>
     </li>
     @endcan
+    @can('admin')
+    <li class="menu-label">Management Pelatihan</li>
+    <li>
+        <a href="{{ route('admin.rencana.page_index')}}">
+            <div class="parent-icon"><i class='bx bx-detail'></i>
+            </div>
+            <div class="menu-title">Rencana Pelatihan</div>
+        </a>
+    </li>
+    <li>
+        <a href="{{route('admin.pendaftaran.page_pendaftaran')}}">
+            <div class="parent-icon"><i class='bx bx-cookie'></i>
+            </div>
+            <div class="menu-title">Pendaftaran Pelatihan</div>
+        </a>
+    </li>
+    @endcan
+    @can('lembaga')
     <li class="menu-label">Management Pelatihan</li>
     <li>
         <a href="{{ route('rencana.page_index')}}">
@@ -32,6 +50,7 @@
             <div class="menu-title">Pendaftaran Pelatihan</div>
         </a>
     </li>
+    @endcan
     @can('admin')
     <li>
         <a href="{{route('admin.kategori')}}">
@@ -48,6 +67,13 @@
             <div class="parent-icon"><i class='bx bx-image'></i>
             </div>
             <div class="menu-title">Slider</div>
+        </a>
+    </li>
+    <li>
+        <a href="{{route('admin.popup.page_index')}}">
+            <div class="parent-icon"><i class='bx bx-image'></i>
+            </div>
+            <div class="menu-title">Popup</div>
         </a>
     </li>
     @endcan

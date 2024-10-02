@@ -17,6 +17,12 @@ class DataUser extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function isComplete()
+    {
+    return !empty($this->jenis_kelamin) && !empty($this->tempat_lahir) && !empty($this->pendidikan) && !empty($this->umur)
+    && !empty($this->kecamatan_id) && !empty($this->desa_id) && !empty($this->tinggi_badan) && !empty($this->berat_badan);
+    }
+
     public function kecamatan()
     {
         return $this->belongsTo(Kecamatan::class);

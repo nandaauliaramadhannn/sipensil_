@@ -1,5 +1,8 @@
 @extends('frontend.layouts.user')
 @section('userdashboard')
+@php
+use Carbon\Carbon;
+@endphp
 <div class="col-lg-9">
     <div class="dashboard__count-wrap">
         <div class="dashboard__content-title">
@@ -46,7 +49,7 @@
             <h4 class="title">Pelatihan Yang akan datang</h4>
         </div>
         <div class="row">
-            @foreach($userpendaftaran as $item)
+            @foreach($userPendaftaran as $item)
             <div class="col-xl-4 col-md-6">
                 <div class="courses__item courses__item-two shine__animate-item">
                     <div class="courses__item-thumb courses__item-thumb-two">
@@ -68,12 +71,29 @@
                             </div>
                         </div>
                         <div class="progress-item progress-item-two">
-                            <h6 class="title">Acara Mulai <span> {{$item->pendaftaran->periode_awal->diffForHumans()}}</span></h6>
+                            <h6 class="title">
+                                Waktu Pelatihan
+                                <span>
+                                    @php
+                                        $periodeAwal = Carbon::parse($item->pendaftaran->periode_awal);
+                                        $periodeAkhir = Carbon::parse($item->pendaftaran->periode_akhir);
+                                    @endphp
+
+                                    @if (Carbon::now()->isBefore($periodeAwal))
+                                    <span style="color: blue;">Mulai <span>{{ $periodeAwal->diffForHumans(null, true) }} lagi</span></span>
+                                    @elseif (Carbon::now()->isBetween($periodeAwal, $periodeAkhir))
+                                    <span style="color: green;">Sedang Berlangsung</span>
+                                    @else
+                                    <span style="color: red;">Telah Selesai</span>
+                                    @endif
+                                </span>
+                            </h6>
                         </div>
                     </div>
                 </div>
             </div>
             @endforeach
+            {{ $userPendaftaran->links() }}
         </div>
     </div>
 </div>

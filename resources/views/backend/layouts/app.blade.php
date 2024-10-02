@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--favicon-->
-	<link rel="icon" href="assets/images/favicon-32x32.png" type="image/png" />
+	<link rel="icon" href="{{asset('frontend/assets/img/logo.png')}}" type="image/png" />
 	<!--plugins-->
 	<link href="{{asset('backend')}}/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
 	<link href="{{asset('backend')}}/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
@@ -68,7 +68,28 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<!--app JS-->
-
+    <script>
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const form = this.closest('form');
+                Swal.fire({
+                    title: 'Apa kamu yakin?',
+                    text: 'Anda tidak akan dapat mengembalikan ini!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batalkan'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{asset('backend')}}/js/index.js"></script>
 	<script src="{{asset('backend')}}/js/app.js"></script>
 	{{-- <script src="{{asset('backend')}}/js/index2.js"></script> --}}
     <script>
@@ -76,9 +97,8 @@
 			$('#example').DataTable();
 		  } );
 	</script>
-	<script>
-		new PerfectScrollbar('.product-list');
-		new PerfectScrollbar('.customers-list');
+    <script>
+		new PerfectScrollbar(".app-container")
 	</script>
     @stack('js')
 </body>

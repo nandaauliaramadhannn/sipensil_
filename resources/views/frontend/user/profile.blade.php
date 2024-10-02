@@ -14,7 +14,7 @@
                             <div class="instructor__cover-info d-flex justify-content-start align-items-center">
                                 <div class="instructor__cover-info-left">
                                     <div class="thumb rounded-circle overflow-hidden">
-                                        <img src="{{asset('upload/user/'. $dataUser->photo)}}" alt="User Photo" class="img-fluid">
+                                        <img src="{{ optional($dataUser)->photo ? asset('upload/user/' . optional($dataUser)->photo) : asset('path/to/default/image.png') }}" alt="User Photo" class="img-fluid">
                                     </div>
                                 </div>
                             </div>

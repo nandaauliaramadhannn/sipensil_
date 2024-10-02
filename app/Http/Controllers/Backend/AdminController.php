@@ -8,6 +8,7 @@ use App\Models\Pelatihan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\UserPendaftaran;
 
 class AdminController extends Controller
 {
@@ -16,7 +17,8 @@ class AdminController extends Controller
         $totallembag = User::where('role','lembaga')->count();
         $totalpelatihan =  Pelatihan::count();
         $kategoriCount = Kategori::count();
-        return view('backend.admin.dashboard', compact('totallembag','totalpelatihan','kategoriCount'));
+        $counttotaluser = UserPendaftaran::count();
+        return view('backend.admin.dashboard', compact('totallembag','totalpelatihan','kategoriCount','counttotaluser'));
     }
 
     public function page_pendaftaran()

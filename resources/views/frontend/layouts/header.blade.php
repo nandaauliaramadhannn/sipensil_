@@ -14,8 +14,8 @@
                                     <li class="menu-item {{ request()->routeIs('index') ? 'active' : '' }}">
                                         <a href="{{ route('index') }}">Home</a>
                                     </li>
-                                    <li class="menu-item {{ request()->is('pelatihan') ? 'active' : '' }}">
-                                        <a href="#">Pelatihan</a>
+                                    <li class="menu-item {{ request()->routeIs('all.page.pelatihan') ? 'active' : '' }}">
+                                        <a href="{{route('all.page.pelatihan')}}">Pelatihan</a>
                                     </li>
                                     <li class="menu-item {{ request()->is('karirhub') ? 'active' : '' }}">
                                         <a href="#">KarirHub</a>

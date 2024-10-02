@@ -7,7 +7,7 @@
     </div>
     <div class="card">
         <div class="card-body p-4">
-            <form id="permohonanForm" action="{{ route('pendaftaran.page_store') }}" method="POST" enctype="multipart/form-data">
+            <form id="permohonanForm" action="{{ route('admin.pendaftaran.page_store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row g-3">
 
@@ -45,7 +45,7 @@
 
                     <div class="col-md-6">
                         <label for="tempat_latihan" class="form-label">Tempat Latihan</label>
-                        <input type="text" name="tempat_latihan" class="form-control @error('tempat_latihan') is-invalid @enderror" id="tempat_latihan" value="{{ old('tempat_latihan') }}">
+                        <input type="text" name="tempat_latihan" class="form-control @error('tempat_latihan') is-invalid @enderror" id="tempat_latihan" value="{{ old('tempat_latihan') }}" required>
                         @error('tempat_latihan')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -53,7 +53,7 @@
 
                     <div class="col-md-6">
                         <label for="no_hp" class="form-label">No. HP</label>
-                        <input type="text" name="no_hp" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" value="{{ old('no_hp') }}">
+                        <input type="text" name="no_hp" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" value="{{ old('no_hp') }}" required>
                         @error('no_hp')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -61,7 +61,7 @@
 
                     <div class="col-md-6">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ old('email') }}">
+                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ old('email') }}" required>
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -85,7 +85,7 @@
 
                     <div class="col-md-6">
                         <label for="periode_awal" class="form-label">Periode Awal</label>
-                        <input type="date" name="periode_awal" class="form-control @error('periode_awal') is-invalid @enderror" id="periode_awal" value="{{ old('periode_awal') }}">
+                        <input type="date" name="periode_awal" class="form-control @error('periode_awal') is-invalid @enderror" id="periode_awal" value="{{ old('periode_awal') }} "required>
                         @error('periode_awal')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -93,7 +93,7 @@
 
                     <div class="col-md-6">
                         <label for="periode_akhir" class="form-label">Periode Akhir</label>
-                        <input type="date" name="periode_akhir" class="form-control @error('periode_akhir') is-invalid @enderror" id="periode_akhir" value="{{ old('periode_akhir') }}">
+                        <input type="date" name="periode_akhir" class="form-control @error('periode_akhir') is-invalid @enderror" id="periode_akhir" value="{{ old('periode_akhir') }}"required>
                         @error('periode_akhir')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -101,7 +101,7 @@
 
                     <div class="col-md-6">
                         <label for="kouta" class="form-label">Kouta</label>
-                        <input type="text" name="kouta" class="form-control @error('kouta') is-invalid @enderror" id="kouta" value="{{ old('kouta') }}">
+                        <input type="text" name="kouta" class="form-control @error('kouta') is-invalid @enderror" id="kouta" value="{{ old('kouta') }}"required>
                         @error('kouta')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -114,13 +114,14 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="col-md-6">
                         <label for="sifat" class="form-label">Sifat Pelatihan</label>
                         <select name="sifat" class="form-select @error('sifat') is-invalid @enderror" id="sifat">
                             <option value="">Pilih Sifat</option>
                             <option value="offline" {{ old('sifat') == 'offline' ? 'selected' : '' }}>Offline</option>
                             <option value="online" {{ old('sifat') == 'online' ? 'selected' : '' }}>Online</option>
-                            <option value="blanded Learning" {{ old('sifat') == 'blanded Learning' ? 'selected' : '' }}>blanded Learning</option>
+                            <option value="blended Learning" {{ old('sifat') == 'blended Learning' ? 'selected' : '' }}>Blended Learning</option>
                             <option value="dll" {{ old('sifat') == 'dll' ? 'selected' : '' }}>Dll</option>
                         </select>
                         @error('sifat')

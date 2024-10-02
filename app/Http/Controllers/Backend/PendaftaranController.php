@@ -23,7 +23,11 @@ class PendaftaranController extends Controller
 
             $pendaftaran = collect();
         }
-        return view('backend.pendaftaran.page_index', compact('pendaftaran'));
+        if (auth()->user()->role === 'admin') {
+            return view('backend.admin.pendaftaran.page_index', compact('pendaftaran'));
+        }elseif(auth()->user()->role === 'lembaga'){
+            return view('backend.pendaftaran.page_index', compact('pendaftaran'));
+        }
     }
 
     public function page_create()
@@ -37,7 +41,12 @@ class PendaftaranController extends Controller
         } else {
             $pelatihan = collect(); // atau []
         }
-        return view('backend.pendaftaran.page_create', compact('pelatihan'));
+        if (auth()->user()->role === 'admin') {
+            return view('backend.admin.pendaftaran.page_create', compact('pelatihan'));
+        }elseif(auth()->user()->role === 'lembaga'){
+            return view('backend.pendaftaran.page_create', compact('pelatihan'));
+        }
+
     }
 
     public function page_store(Request $request)
@@ -88,7 +97,13 @@ class PendaftaranController extends Controller
         ]);
 
         Alert::toast('penftaran pelatihan berhasil', 'success');
-        return redirect()->route('pendaftaran.page_pendaftaran');
+        if(auth()->user()->role === 'admin'){
+            Alert::toast('penftaran pelatihan berhasil', 'success');
+            return redirect()->route('admin.pendaftaran.page_pendaftaran');
+        }elseif(auth()->user()->role === 'lembaga'){
+            Alert::toast('penftaran pelatihan berhasil', 'success');
+            return redirect()->route('pendaftaran.page_pendaftaran');
+        }
     }
 
     public function getPelatihan($id)
@@ -103,7 +118,12 @@ class PendaftaranController extends Controller
     public function show_page($id)
     {
         $pendaftaran = Pendaftran::findOrFail($id);
-        return view('backend.pendaftaran.page_show', compact('pendaftaran'));
+        if(auth()->user()->role === 'admin'){
+            return view('backend.admin.pendaftaran.page_show', compact('pendaftaran'));
+        }elseif(auth()->user()->role === 'lembaga'){
+            return view('backend.pendaftaran.page_show', compact('pendaftaran'));
+        }
+
     }
 
     public function page_edit($id)

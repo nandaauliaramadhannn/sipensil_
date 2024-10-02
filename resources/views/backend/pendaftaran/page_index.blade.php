@@ -25,8 +25,8 @@
                         @foreach ($pendaftaran as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->user->lembaga->name }}</td>
-                            <td>{{ $item->pelatihan->nama_pelatihan }}</td>
+                            <td>{{ $item->user->lembaga->name ?? 'Tidak Diketahui'  }}</td>
+                            <td>{{ $item->pelatihan->nama_pelatihan ?? 'Tidak Diketahui' }}</td>
                             <td>
                                 @if($item->status === 'dibuka')
                                     <span class="badge bg-success">Dibuka</span>

@@ -13,13 +13,11 @@
                         <p class="ajax-response mb-0"></p>
 
 
-                            <a href="{{ asset('upload/bukti_pendaftaran/' . $userPendaftaran->id) }}"
+                            <a href="{{ asset('upload/bukti_pendaftaran/' . $userPendaftaran->file_bukti) }}"
                                class="btn btn-two arrow-btn">
                                 Cetak Bukti Pendaftaran
                                 <img src="{{ asset('frontend/assets/img/icons/right_arrow.svg') }}" alt="img" class="injectable ms-2">
                             </a>
-
-
                     </div>
                 </div>
             </div>

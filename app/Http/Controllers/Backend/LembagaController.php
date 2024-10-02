@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Lembaga;
+use App\Models\Pelatihan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,7 +13,9 @@ class LembagaController extends Controller
 {
     public function page_dashboard()
     {
-        return view('backend.lembaga.dashboard');
+        $user = Auth::user();
+        $totalpelatihan = Pelatihan::where('user_id', $user->id)->latest()->count();
+        return view('backend.lembaga.dashboard', compact('totalpelatihan'));
     }
 
     public function showFillForm()
